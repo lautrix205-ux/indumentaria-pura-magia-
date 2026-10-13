@@ -7,225 +7,486 @@
 <meta name="theme-color" content="#050505">
 <meta name="description" content="Pura Magia Indumentaria. Streetwear, tu estilo, tus reglas.">
 <title>Pura Magia | Indumentaria</title>
+
 <style>
-:root{--bg:#050505;--panel:#101010;--white:#f7f7f7;--muted:#aaa;--line:#292929}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--white);font-family:Arial,Helvetica,sans-serif}
-a{color:inherit;text-decoration:none}
-button,input,select{font:inherit}
-button{cursor:pointer}
-header{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px 6%;background:#080808;border-bottom:1px solid var(--line)}
-.brand{display:flex;align-items:center;gap:12px}
-.logo{display:grid;place-items:center;width:46px;height:46px;border:1px solid white;border-radius:50%;font-weight:900}
-.brand-name{font-weight:900;letter-spacing:3px}
-.brand-sub{margin-top:4px;color:var(--muted);font-size:10px;letter-spacing:3px}
-nav{display:flex;gap:20px;font-size:13px}
-nav a:hover{color:#aaa}
-.cart-button,.outline-button,.buy-button{padding:11px 16px;border:1px solid white;background:transparent;color:white}
-.hero{min-height:460px;padding:90px 6%;display:flex;align-items:center;background:radial-gradient(ellipse at 75% 45%,#383838,#151515 35%,#050505 75%)}
-.hero-content{max-width:700px}
-.eyebrow{font-size:12px;letter-spacing:5px;color:#ccc}
-h1{margin:18px 0 8px;font-size:clamp(48px,10vw,100px);line-height:.95;letter-spacing:-5px}
-.hero-sub{font-size:20px;letter-spacing:6px}
-.hero p{color:#ccc;letter-spacing:3px;font-size:12px;margin:24px 0 30px}
-.primary-button{display:inline-block;padding:15px 22px;background:white;color:#050505;border:1px solid white;font-weight:bold}
-.primary-button:hover{background:transparent;color:white}
-.benefits{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line)}
-.benefit{padding:25px 12px;text-align:center;border-right:1px solid var(--line)}
-.benefit strong,.benefit span{display:block}
-.benefit strong{font-size:12px;letter-spacing:1px}
-.benefit span{margin-top:8px;font-size:11px;color:var(--muted)}
-section{padding:65px 6%}
-.section-heading{margin-bottom:28px}
-.section-heading h2{margin:0 0 10px;font-size:28px;letter-spacing:3px}
-.section-heading p{color:var(--muted);font-size:13px}
-.categories{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
-.category{min-height:130px;display:flex;align-items:end;padding:18px;border:1px solid var(--line);background:linear-gradient(145deg,#292929,#0b0b0b);cursor:pointer;transition:.2s}
-.category:hover{border-color:white;transform:translateY(-3px)}
-.category strong{letter-spacing:1px;font-size:12px}
-.shop-tools{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:25px}
-.shop-tools input,.shop-tools select{min-width:180px;padding:12px;border:1px solid var(--line);background:var(--panel);color:white}
-.products{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
-.product{border:1px solid var(--line);background:var(--panel);min-width:0}
-.product-image{height:235px;display:grid;place-items:center;background:linear-gradient(145deg,#292929,#101010);overflow:hidden;color:#bbb;text-align:center}
-.product-image img{width:100%;height:100%;object-fit:cover}
-.product-info{padding:15px}
-.product-info h3{margin:0 0 10px;font-size:15px}
-.price{font-weight:bold;font-size:18px}
-.product-info p{color:var(--muted);font-size:12px}
-.product-actions{display:flex;gap:8px;margin-top:14px}
-.product-actions select{width:75px;min-width:0;background:#111;color:white;border:1px solid var(--line);padding:8px}
-.buy-button{flex:1;padding:10px 5px;font-size:11px}
-.buy-button:hover,.outline-button:hover{background:white;color:black}
-.empty{color:var(--muted);padding:25px 0}
-.about{background:#0b0b0b;border-block:1px solid var(--line);text-align:center}
-.about p{max-width:650px;margin:18px auto;color:#bbb;line-height:1.8}
-.contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.contact-card{padding:25px;border:1px solid var(--line)}
-.contact-card h3{font-size:13px;letter-spacing:2px}
-.contact-card p,footer p{color:var(--muted);font-size:12px;line-height:1.8}
-footer{padding:35px 6%;border-top:1px solid var(--line);text-align:center}
-footer strong{letter-spacing:3px}
-.footer-links{display:flex;justify-content:center;flex-wrap:wrap;gap:20px;margin:20px 0;font-size:12px}
-.cart-panel{position:fixed;right:16px;bottom:16px;z-index:20;width:min(390px,calc(100% - 32px));max-height:75vh;overflow:auto;padding:22px;background:#101010;border:1px solid #555;box-shadow:0 10px 50px #000;display:none}
-.cart-panel.open{display:block}
-.cart-header{display:flex;justify-content:space-between;align-items:center}
-.cart-header h3{letter-spacing:2px}
-.cart-item{padding:13px 0;border-bottom:1px solid var(--line);font-size:13px}
-.cart-item button{float:right;color:white;background:transparent;border:0}
-.cart-total{padding:18px 0;font-weight:bold}
-.cart-panel .primary-button{width:100%;text-align:center;cursor:pointer}
-@media(max-width:850px){nav{gap:12px}.categories{grid-template-columns:repeat(3,1fr)}.products{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:600px){
-header{flex-wrap:wrap;padding:12px 5%}
-nav{order:3;width:100%;justify-content:space-between;font-size:11px}
-.brand-name{letter-spacing:2px;font-size:13px}
-.hero{min-height:380px;padding:65px 6%}
-h1{letter-spacing:-3px}.hero-sub{font-size:14px;letter-spacing:4px}
-.benefits{grid-template-columns:repeat(2,1fr)}
-.benefit:nth-child(2){border-right:0}
-.benefit:nth-child(-n+2){border-bottom:1px solid var(--line)}
-section{padding:45px 5%}
-.categories{grid-template-columns:repeat(2,1fr)}
-.category{min-height:105px;padding:12px}
-.products{gap:10px}
-.product-image{height:170px}
-.product-info{padding:10px}
-.product-info h3{font-size:13px}
-.price{font-size:16px}
-.product-actions{flex-wrap:wrap}
-.contact-grid{grid-template-columns:1fr}
+:root {
+  --bg: #050505;
+  --panel: #101010;
+  --white: #f7f7f7;
+  --muted: #aaa;
+  --line: #292929;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--white);
+  font-family: Arial, Helvetica, sans-serif;
+}
+a { color: inherit; text-decoration: none; }
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+button:disabled { opacity: .45; cursor: not-allowed; }
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 16px 6%;
+  background: #080808;
+  border-bottom: 1px solid var(--line);
+}
+.brand { display: flex; align-items: center; gap: 12px; }
+.logo {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid white;
+  border-radius: 50%;
+  font-weight: 900;
+}
+.brand-name { font-weight: 900; letter-spacing: 3px; }
+.brand-sub {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+nav { display: flex; gap: 20px; font-size: 13px; }
+nav a:hover { color: #aaa; }
+
+.cart-button, .outline-button, .buy-button {
+  padding: 11px 16px;
+  border: 1px solid white;
+  background: transparent;
+  color: white;
+}
+.hero {
+  min-height: 460px;
+  padding: 90px 6%;
+  display: flex;
+  align-items: center;
+  background: radial-gradient(ellipse at 75% 45%, #383838, #151515 35%, #050505 75%);
+}
+.hero-content { max-width: 700px; }
+.eyebrow { font-size: 12px; letter-spacing: 5px; color: #ccc; }
+h1 {
+  margin: 18px 0 8px;
+  font-size: clamp(48px, 10vw, 100px);
+  line-height: .95;
+  letter-spacing: -5px;
+}
+.hero-sub { font-size: 20px; letter-spacing: 6px; }
+.hero p { color: #ccc; letter-spacing: 3px; font-size: 12px; margin: 24px 0 30px; }
+.primary-button {
+  display: inline-block;
+  padding: 15px 22px;
+  background: white;
+  color: #050505;
+  border: 1px solid white;
+  font-weight: bold;
+}
+.primary-button:hover { background: transparent; color: white; }
+
+.benefits {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid var(--line);
+}
+.benefit {
+  padding: 25px 12px;
+  text-align: center;
+  border-right: 1px solid var(--line);
+}
+.benefit strong, .benefit span { display: block; }
+.benefit strong { font-size: 12px; letter-spacing: 1px; }
+.benefit span { margin-top: 8px; font-size: 11px; color: var(--muted); }
+
+section { padding: 65px 6%; }
+.section-heading { margin-bottom: 28px; }
+.section-heading h2 { margin: 0 0 10px; font-size: 28px; letter-spacing: 3px; }
+.section-heading p { color: var(--muted); font-size: 13px; }
+
+.categories { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.category {
+  min-height: 130px;
+  display: flex;
+  align-items: end;
+  padding: 18px;
+  border: 1px solid var(--line);
+  background: linear-gradient(145deg, #292929, #0b0b0b);
+  cursor: pointer;
+  transition: .2s;
+}
+.category:hover { border-color: white; transform: translateY(-3px); }
+.category strong { letter-spacing: 1px; font-size: 12px; }
+
+.shop-tools { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 25px; }
+.shop-tools input, .shop-tools select {
+  min-width: 180px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: white;
+}
+.products { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+.product { border: 1px solid var(--line); background: var(--panel); min-width: 0; }
+.product-image {
+  height: 235px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(145deg, #292929, #101010);
+  overflow: hidden;
+  color: #bbb;
+  text-align: center;
+}
+.product-image img { width: 100%; height: 100%; object-fit: cover; }
+.product-info { padding: 15px; }
+.product-info h3 { margin: 0 0 10px; font-size: 15px; }
+.price { font-weight: bold; font-size: 18px; }
+.product-info p { color: var(--muted); font-size: 12px; }
+.product-actions { display: flex; gap: 8px; margin-top: 14px; }
+.product-actions select {
+  width: 75px;
+  min-width: 0;
+  background: #111;
+  color: white;
+  border: 1px solid var(--line);
+  padding: 8px;
+}
+.buy-button { flex: 1; padding: 10px 5px; font-size: 11px; }
+.buy-button:hover, .outline-button:hover { background: white; color: black; }
+.empty { color: var(--muted); padding: 25px 0; }
+
+.about {
+  background: #0b0b0b;
+  border-block: 1px solid var(--line);
+  text-align: center;
+}
+.about p { max-width: 650px; margin: 18px auto; color: #bbb; line-height: 1.8; }
+.contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.contact-card { padding: 25px; border: 1px solid var(--line); }
+.contact-card h3 { font-size: 13px; letter-spacing: 2px; }
+.contact-card p, footer p { color: var(--muted); font-size: 12px; line-height: 1.8; }
+
+footer { padding: 35px 6%; border-top: 1px solid var(--line); text-align: center; }
+footer strong { letter-spacing: 3px; }
+.footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin: 20px 0; font-size: 12px; }
+
+.cart-panel {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 20;
+  width: min(390px, calc(100% - 32px));
+  max-height: 75vh;
+  overflow: auto;
+  padding: 22px;
+  background: #101010;
+  border: 1px solid #555;
+  box-shadow: 0 10px 50px #000;
+  display: none;
+}
+.cart-panel.open { display: block; }
+.cart-header { display: flex; justify-content: space-between; align-items: center; }
+.cart-header h3 { letter-spacing: 2px; }
+.cart-item { padding: 13px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+.cart-item button { float: right; color: white; background: transparent; border: 0; }
+.cart-total { padding: 18px 0; font-weight: bold; }
+.cart-panel .primary-button { width: 100%; text-align: center; cursor: pointer; }
+.status { color: var(--muted); font-size: 12px; margin: 12px 0; }
+
+@media(max-width:850px) {
+  nav { gap: 12px; }
+  .categories { grid-template-columns: repeat(3, 1fr); }
+  .products { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media(max-width:600px) {
+  header { flex-wrap: wrap; padding: 12px 5%; }
+  nav { order: 3; width: 100%; justify-content: space-between; font-size: 11px; }
+  .brand-name { letter-spacing: 2px; font-size: 13px; }
+  .hero { min-height: 380px; padding: 65px 6%; }
+  h1 { letter-spacing: -3px; }
+  .hero-sub { font-size: 14px; letter-spacing: 4px; }
+  .benefits { grid-template-columns: repeat(2, 1fr); }
+  .benefit:nth-child(2) { border-right: 0; }
+  .benefit:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  section { padding: 45px 5%; }
+  .categories { grid-template-columns: repeat(2, 1fr); }
+  .category { min-height: 105px; padding: 12px; }
+  .products { gap: 10px; }
+  .product-image { height: 170px; }
+  .product-info { padding: 10px; }
+  .product-info h3 { font-size: 13px; }
+  .price { font-size: 16px; }
+  .product-actions { flex-wrap: wrap; }
+  .contact-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
+
 <body>
 <header>
-<a class="brand" href="#inicio">
-<div class="logo">PM</div>
-<div><div class="brand-name">PURA MAGIA</div><div class="brand-sub">INDUMENTARIA</div></div>
-</a>
-<nav>
-<a href="#inicio">Inicio</a>
-<a href="#categorias">Tienda</a>
-<a href="#nosotros">Nosotros</a>
-<a href="#contacto">Contacto</a>
-</nav>
-<button class="cart-button" onclick="toggleCart()">Bolsa (<span id="cart-count">0</span>)</button>
+  <a class="brand" href="#inicio">
+    <div class="logo">PM</div>
+    <div>
+      <div class="brand-name">PURA MAGIA</div>
+      <div class="brand-sub">INDUMENTARIA</div>
+    </div>
+  </a>
+  <nav>
+    <a href="#inicio">Inicio</a>
+    <a href="#categorias">Tienda</a>
+    <a href="#nosotros">Nosotros</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+  <button class="cart-button" onclick="toggleCart()">Bolsa (<span id="cart-count">0</span>)</button>
 </header>
 
 <main>
-<section class="hero" id="inicio">
-<div class="hero-content">
-<div class="eyebrow">STREETWEAR · NUEVA TEMPORADA</div>
-<h1>PURA MAGIA</h1>
-<div class="hero-sub">— INDUMENTARIA —</div>
-<p>TU ESTILO ✦ TUS REGLAS</p>
-<a class="primary-button" href="#tienda">EXPLORAR COLECCIÓN ↗</a>
-</div>
-</section>
+  <section class="hero" id="inicio">
+    <div class="hero-content">
+      <div class="eyebrow">STREETWEAR · NUEVA TEMPORADA</div>
+      <h1>PURA MAGIA</h1>
+      <div class="hero-sub">— INDUMENTARIA —</div>
+      <p>TU ESTILO ✦ TUS REGLAS</p>
+      <a class="primary-button" href="#tienda">EXPLORAR COLECCIÓN ↗</a>
+    </div>
+  </section>
 
-<div class="benefits">
-<div class="benefit"><strong>✦ ENVÍOS</strong><span>Consultá las opciones de entrega</span></div>
-<div class="benefit"><strong>✦ ATENCIÓN</strong><span>Te ayudamos a elegir</span></div>
-<div class="benefit"><strong>✦ PAGOS</strong><span>Consultá los medios disponibles</span></div>
-<div class="benefit"><strong>✦ ESTILO PROPIO</strong><span>Encontrá tu próximo look</span></div>
-</div>
+  <div class="benefits">
+    <div class="benefit"><strong>✦ ENVÍOS</strong><span>Consultá las opciones de entrega</span></div>
+    <div class="benefit"><strong>✦ ATENCIÓN</strong><span>Te ayudamos a elegir</span></div>
+    <div class="benefit"><strong>✦ PAGOS</strong><span>Consultá los medios disponibles</span></div>
+    <div class="benefit"><strong>✦ ESTILO PROPIO</strong><span>Encontrá tu próximo look</span></div>
+  </div>
 
-<section id="categorias">
-<div class="section-heading"><h2>CATEGORÍAS</h2><p>Encontrá tu estilo. Elegí tu próxima prenda.</p></div>
-<div class="categories">
-<div class="category" onclick="filterCategory('Buzos')"><strong>BUZOS ↗</strong></div>
-<div class="category" onclick="filterCategory('Remeras')"><strong>REMERAS ↗</strong></div>
-<div class="category" onclick="filterCategory('Camperas')"><strong>CAMPERAS ↗</strong></div>
-<div class="category" onclick="filterCategory('Pantalones')"><strong>PANTALONES ↗</strong></div>
-<div class="category" onclick="filterCategory('Accesorios')"><strong>ACCESORIOS ↗</strong></div>
-</div>
-</section>
+  <section id="categorias">
+    <div class="section-heading">
+      <h2>CATEGORÍAS</h2>
+      <p>Encontrá tu estilo. Elegí tu próxima prenda.</p>
+    </div>
+    <div class="categories" id="category-cards">
+      <div class="category" onclick="filterCategory('Buzos')"><strong>BUZOS ↗</strong></div>
+      <div class="category" onclick="filterCategory('Remeras')"><strong>REMERAS ↗</strong></div>
+      <div class="category" onclick="filterCategory('Camperas')"><strong>CAMPERAS ↗</strong></div>
+      <div class="category" onclick="filterCategory('Pantalones')"><strong>PANTALONES ↗</strong></div>
+      <div class="category" onclick="filterCategory('Accesorios')"><strong>ACCESORIOS ↗</strong></div>
+    </div>
+  </section>
 
-<section id="tienda">
-<div class="section-heading"><h2>LA COLECCIÓN</h2><p>Prendas para expresarte a tu manera.</p></div>
-<div class="shop-tools">
-<input id="search" type="search" placeholder="Buscar prendas..." oninput="renderProducts()">
-<select id="category-filter" onchange="renderProducts()">
-<option value="Todos">Todas las categorías</option>
-<option value="Buzos">Buzos</option>
-<option value="Remeras">Remeras</option>
-<option value="Camperas">Camperas</option>
-<option value="Pantalones">Pantalones</option>
-<option value="Accesorios">Accesorios</option>
-</select>
-</div>
-<div class="products" id="products"></div>
-<p class="empty" id="empty" hidden>No encontramos productos con esa búsqueda.</p>
-<p style="color:#777;font-size:11px;margin-top:25px">Los productos, las imágenes y los precios son ejemplos. Actualizalos con tu catálogo real antes de vender.</p>
-</section>
+  <section id="tienda">
+    <div class="section-heading">
+      <h2>LA COLECCIÓN</h2>
+      <p>Prendas para expresarte a tu manera.</p>
+    </div>
+    <div class="shop-tools">
+      <input id="search" type="search" placeholder="Buscar prendas..." oninput="renderProducts()">
+      <select id="category-filter" onchange="renderProducts()">
+        <option value="Todos">Todas las categorías</option>
+      </select>
+    </div>
+    <p class="status" id="connection-status">Conectando con la colección...</p>
+    <div class="products" id="products"></div>
+    <p class="empty" id="empty" hidden>No encontramos productos con esa búsqueda.</p>
+    <p style="color:#777;font-size:11px;margin-top:25px">
+      Consultá disponibilidad, talles y medios de pago antes de confirmar tu pedido.
+    </p>
+  </section>
 
-<section class="about" id="nosotros">
-<h2>LA MAGIA TAMBIÉN SE LLEVA PUESTA</h2>
-<p>En PURA MAGIA creemos que la ropa es una forma de expresarte. Buscamos prendas con personalidad para que armes tu propio estilo, sin reglas y a tu manera.</p>
-<p><strong>TU ESTILO ✦ TUS REGLAS</strong></p>
-</section>
+  <section class="about" id="nosotros">
+    <h2>LA MAGIA TAMBIÉN SE LLEVA PUESTA</h2>
+    <p>En PURA MAGIA creemos que la ropa es una forma de expresarte. Buscamos prendas con personalidad para que armes tu propio estilo, sin reglas y a tu manera.</p>
+    <p><strong>TU ESTILO ✦ TUS REGLAS</strong></p>
+  </section>
 
-<section id="contacto">
-<div class="section-heading"><h2>CONTACTO</h2><p>¿Tenés alguna consulta? Estamos para ayudarte.</p></div>
-<div class="contact-grid">
-<div class="contact-card"><h3>WHATSAPP</h3><p>Consultanos por talles, stock, precios y entregas.</p></div>
-<div class="contact-card"><h3>REDES SOCIALES</h3><p>Próximamente vas a encontrar nuestras novedades y lanzamientos.</p></div>
-<div class="contact-card"><h3>ATENCIÓN</h3><p>Consultá disponibilidad antes de comprar.</p></div>
-</div>
-</section>
+  <section id="contacto">
+    <div class="section-heading">
+      <h2>CONTACTO</h2>
+      <p>¿Tenés alguna consulta? Estamos para ayudarte.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <h3>WHATSAPP</h3>
+        <p>Consultanos por talles, stock, precios y entregas.</p>
+      </div>
+      <div class="contact-card">
+        <h3>REDES SOCIALES</h3>
+        <p>Próximamente vas a encontrar nuestras novedades y lanzamientos.</p>
+      </div>
+      <div class="contact-card">
+        <h3>ATENCIÓN</h3>
+        <p>Consultá disponibilidad antes de comprar.</p>
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer>
-<strong>PURA MAGIA</strong>
-<p>INDUMENTARIA · TU ESTILO ✦ TUS REGLAS</p>
-<div class="footer-links"><a href="#inicio">Inicio</a><a href="#tienda">Tienda</a><a href="#nosotros">Nosotros</a><a href="#contacto">Contacto</a></div>
-<p>© <span id="year"></span> PURA MAGIA INDUMENTARIA. Todos los derechos reservados.</p>
+  <strong>PURA MAGIA</strong>
+  <p>INDUMENTARIA · TU ESTILO ✦ TUS REGLAS</p>
+  <div class="footer-links">
+    <a href="#inicio">Inicio</a>
+    <a href="#tienda">Tienda</a>
+    <a href="#nosotros">Nosotros</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+  <p>© <span id="year"></span> PURA MAGIA INDUMENTARIA. Todos los derechos reservados.</p>
 </footer>
 
 <aside class="cart-panel" id="cart-panel" aria-label="Carrito de compras">
-<div class="cart-header"><h3>TU BOLSA</h3><button class="outline-button" onclick="toggleCart()">Cerrar ✕</button></div>
-<div id="cart-items"></div>
-<div class="cart-total">Total: <span id="cart-total">$0</span></div>
-<button class="primary-button" onclick="checkout()">CONSULTAR PEDIDO POR WHATSAPP</button>
-<p style="color:#aaa;font-size:11px">El pedido se prepara para consultar disponibilidad. La compra no se confirma automáticamente.</p>
+  <div class="cart-header">
+    <h3>TU BOLSA</h3>
+    <button class="outline-button" onclick="toggleCart()">Cerrar ✕</button>
+  </div>
+  <div id="cart-items"></div>
+  <div class="cart-total">Total: <span id="cart-total">$0</span></div>
+  <button class="primary-button" onclick="checkout()">CONSULTAR PEDIDO POR WHATSAPP</button>
+  <p style="color:#aaa;font-size:11px">El pedido se consulta por WhatsApp. No se confirma ni se cobra automáticamente.</p>
 </aside>
 
 <script>
 "use strict";
 
-const products = [
-{id:1,name:"Buzo Oversize PM",category:"Buzos",price:45000,sizes:["S","M","L","XL"],image:"https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=700&q=80"},
-{id:2,name:"Remera Streetwear",category:"Remeras",price:28000,sizes:["S","M","L","XL"],image:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=700&q=80"},
-{id:3,name:"Campera Windbreaker",category:"Camperas",price:60000,sizes:["S","M","L","XL"],image:"https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=700&q=80"},
-{id:4,name:"Pantalón Cargo",category:"Pantalones",price:42000,sizes:["S","M","L","XL"],image:"https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=700&q=80"},
-{id:5,name:"Gorra PM",category:"Accesorios",price:18000,sizes:["Único"],image:"https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=700&q=80"}
-];
+// CONFIGURACIÓN PÚBLICA DE SUPABASE
+const SUPABASE_URL = "https://hcnjnzpmlydhjnsdvzyh.supabase.co";
+const SUPABASE_KEY = "sb_publishable_w5yT150xEdZuz3Ob6BRpng_vgiqrBN_";
 
+// Poné el número de WhatsApp con código de país, sin +, espacios ni guiones.
+// Ejemplo argentino: 54911XXXXXXXX
+const WHATSAPP_NUMBER = "";
+
+let products = [];
+let categories = [];
 const cart = [];
 
 function money(amount) {
   return new Intl.NumberFormat("es-AR", {
-    style:"currency",
-    currency:"ARS",
-    maximumFractionDigits:0
+    style: "currency",
+    currency: "ARS",
+    maximumFractionDigits: 0
   }).format(amount);
 }
 
-function renderProducts() {
-  const searchInput = document.getElementById("search");
-  const categoryInput = document.getElementById("category-filter");
-  const container = document.getElementById("products");
-  const emptyMessage = document.getElementById("empty");
+async function supabaseGet(path) {
+  const response = await fetch(SUPABASE_URL + "/rest/v1/" + path, {
+    headers: {
+      "apikey": SUPABASE_KEY,
+      "Authorization": "Bearer " + SUPABASE_KEY
+    }
+  });
 
-  const query = searchInput.value.toLowerCase().trim();
-  const category = categoryInput.value;
+  if (!response.ok) {
+    const message = await response.text();
+    throw new Error("Supabase " + response.status + ": " + message);
+  }
+
+  return response.json();
+}
+
+async function loadProducts() {
+  const container = document.getElementById("products");
+  const status = document.getElementById("connection-status");
+  status.textContent = "Cargando productos...";
+  container.innerHTML = "";
+
+  try {
+    // Consultamos productos y categorías por separado.
+    // Así no dependemos de que exista una relación automática entre las tablas.
+    const results = await Promise.all([
+      supabaseGet("products?select=id,name,description,price,image_url,category_id,stock,active&active=eq.true&order=id.desc"),
+      supabaseGet("categories?select=id,name&order=name.asc")
+    ]);
+
+    const productRows = results[0];
+    categories = results[1];
+
+    products = productRows.map(function(item) {
+      const category = categories.find(function(cat) {
+        return Number(cat.id) === Number(item.category_id);
+      });
+
+      return {
+        id: item.id,
+        name: item.name || "Producto sin nombre",
+        description: item.description || "",
+        category: category ? category.name : "Otros",
+        price: Number(item.price || 0),
+        image: item.image_url || "",
+        stock: Math.max(0, Number(item.stock || 0)),
+        sizes: (category && /accesorio/i.test(category.name))
+          ? ["Único"]
+          : ["S", "M", "L", "XL"]
+      };
+    });
+
+    updateCategoryFilter();
+    status.textContent = "Colección actualizada.";
+    renderProducts();
+  } catch (error) {
+    console.error("Error cargando la tienda:", error);
+    status.textContent = "No se pudo conectar con la colección.";
+    container.innerHTML = "";
+    const message = document.createElement("p");
+    message.className = "empty";
+    message.textContent =
+      "No pudimos cargar los productos. Revisá la configuración de Supabase y las políticas de lectura.";
+    container.appendChild(message);
+    document.getElementById("empty").hidden = true;
+  }
+}
+
+function updateCategoryFilter() {
+  const select = document.getElementById("category-filter");
+  const previous = select.value;
+  select.innerHTML = "";
+
+  const allOption = document.createElement("option");
+  allOption.value = "Todos";
+  allOption.textContent = "Todas las categorías";
+  select.appendChild(allOption);
+
+  const names = [...new Set(
+    categories.map(function(category) {
+      return category.name;
+    }).filter(Boolean)
+  )];
+
+  names.forEach(function(name) {
+    const option = document.createElement("option");
+    option.value = name;
+    option.textContent = name;
+    select.appendChild(option);
+  });
+
+  if ([...select.options].some(function(option) {
+    return option.value === previous;
+  })) {
+    select.value = previous;
+  }
+}
+
+function renderProducts() {
+  const query = document.getElementById("search").value.toLowerCase().trim();
+  const selectedCategory = document.getElementById("category-filter").value;
+  const container = document.getElementById("products");
+  const empty = document.getElementById("empty");
 
   const filtered = products.filter(function(product) {
-    const matchesName = product.name.toLowerCase().includes(query);
-    const matchesCategory = category === "Todos" || product.category === category;
-    return matchesName && matchesCategory;
+    const searchable = (
+      product.name + " " +
+      product.description + " " +
+      product.category
+    ).toLowerCase();
+
+    return searchable.includes(query) &&
+      (selectedCategory === "Todos" || product.category === selectedCategory);
   });
 
   container.innerHTML = "";
@@ -237,14 +498,19 @@ function renderProducts() {
     const imageBox = document.createElement("div");
     imageBox.className = "product-image";
 
-    const img = document.createElement("img");
-    img.src = product.image;
-    img.alt = product.name;
-    img.loading = "lazy";
-    img.onerror = function() {
+    if (product.image) {
+      const img = document.createElement("img");
+      img.src = product.image;
+      img.alt = product.name;
+      img.loading = "lazy";
+      img.onerror = function() {
+        img.remove();
+        imageBox.textContent = product.category.toUpperCase();
+      };
+      imageBox.appendChild(img);
+    } else {
       imageBox.textContent = product.category.toUpperCase();
-    };
-    imageBox.appendChild(img);
+    }
 
     const info = document.createElement("div");
     info.className = "product-info";
@@ -256,15 +522,20 @@ function renderProducts() {
     price.className = "price";
     price.textContent = money(product.price);
 
-    const categoryText = document.createElement("p");
-    categoryText.textContent = product.category;
+    const description = document.createElement("p");
+    description.textContent = product.description || product.category;
+
+    const stock = document.createElement("p");
+    stock.textContent = product.stock > 0
+      ? "Stock informado: " + product.stock
+      : "Sin stock disponible";
 
     const actions = document.createElement("div");
     actions.className = "product-actions";
 
     const sizeSelect = document.createElement("select");
     sizeSelect.id = "size-" + product.id;
-    sizeSelect.setAttribute("aria-label", "Elegir talle de " + product.name);
+    sizeSelect.setAttribute("aria-label", "Talle de " + product.name);
 
     product.sizes.forEach(function(size) {
       const option = document.createElement("option");
@@ -275,7 +546,8 @@ function renderProducts() {
 
     const addButton = document.createElement("button");
     addButton.className = "buy-button";
-    addButton.textContent = "AGREGAR +";
+    addButton.textContent = product.stock > 0 ? "AGREGAR +" : "SIN STOCK";
+    addButton.disabled = product.stock <= 0;
     addButton.onclick = function() {
       addToCart(product.id);
     };
@@ -284,31 +556,49 @@ function renderProducts() {
     actions.appendChild(addButton);
     info.appendChild(name);
     info.appendChild(price);
-    info.appendChild(categoryText);
+    info.appendChild(description);
+    info.appendChild(stock);
     info.appendChild(actions);
     article.appendChild(imageBox);
     article.appendChild(info);
     container.appendChild(article);
   });
 
-  emptyMessage.hidden = filtered.length > 0;
+  empty.hidden = filtered.length > 0;
 }
 
 function filterCategory(category) {
-  document.getElementById("category-filter").value = category;
+  const select = document.getElementById("category-filter");
+  const exists = [...select.options].some(function(option) {
+    return option.value === category;
+  });
+
+  select.value = exists ? category : "Todos";
   renderProducts();
-  document.getElementById("tienda").scrollIntoView({behavior:"smooth"});
+  document.getElementById("tienda").scrollIntoView({ behavior: "smooth" });
 }
 
 function addToCart(id) {
   const product = products.find(function(item) {
-    return item.id === id;
+    return Number(item.id) === Number(id);
   });
 
-  if (!product) return;
+  if (!product || product.stock <= 0) return;
 
   const sizeSelect = document.getElementById("size-" + id);
-  cart.push({...product, size:sizeSelect.value});
+  const size = sizeSelect ? sizeSelect.value : "Único";
+
+  // Evitamos agregar más unidades que las informadas en el stock.
+  const alreadyAdded = cart.filter(function(item) {
+    return Number(item.id) === Number(id);
+  }).length;
+
+  if (alreadyAdded >= product.stock) {
+    alert("Llegaste al stock informado para esta prenda. Consultanos por WhatsApp.");
+    return;
+  }
+
+  cart.push({ ...product, size: size });
   renderCart();
   document.getElementById("cart-panel").classList.add("open");
 }
@@ -320,19 +610,36 @@ function removeFromCart(index) {
 
 function renderCart() {
   document.getElementById("cart-count").textContent = cart.length;
-
   const items = document.getElementById("cart-items");
+  items.innerHTML = "";
 
   if (cart.length === 0) {
-    items.innerHTML = "<p>Tu bolsa está vacía.</p>";
+    const message = document.createElement("p");
+    message.textContent = "Tu bolsa está vacía.";
+    items.appendChild(message);
   } else {
-    items.innerHTML = cart.map(function(product, index) {
-      return '<div class="cart-item">' +
-        '<button onclick="removeFromCart(' + index + ')" aria-label="Eliminar producto">✕</button>' +
-        '<strong>' + product.name + '</strong><br>' +
-        'Talle: ' + product.size + ' · ' + money(product.price) +
-        '</div>';
-    }).join("");
+    cart.forEach(function(product, index) {
+      const item = document.createElement("div");
+      item.className = "cart-item";
+
+      const remove = document.createElement("button");
+      remove.textContent = "✕";
+      remove.setAttribute("aria-label", "Eliminar producto");
+      remove.onclick = function() {
+        removeFromCart(index);
+      };
+
+      const name = document.createElement("strong");
+      name.textContent = product.name;
+
+      item.appendChild(remove);
+      item.appendChild(name);
+      item.appendChild(document.createElement("br"));
+      item.appendChild(document.createTextNode(
+        "Talle: " + product.size + " · " + money(product.price)
+      ));
+      items.appendChild(item);
+    });
   }
 
   const total = cart.reduce(function(sum, product) {
@@ -353,24 +660,31 @@ function checkout() {
   }
 
   const lines = cart.map(function(product) {
-    return "- " + product.name + " | Talle: " + product.size + " | " + money(product.price);
+    return "- " + product.name +
+      " | Talle: " + product.size +
+      " | " + money(product.price);
   });
 
   const total = cart.reduce(function(sum, product) {
     return sum + product.price;
   }, 0);
 
-  const message = "Hola, PURA MAGIA. Quiero consultar por este pedido:\n" +
+  const message =
+    "Hola, PURA MAGIA. Quiero consultar por este pedido:\n" +
     lines.join("\n") +
     "\nTotal estimado: " + money(total) +
     "\n¿Hay stock y cómo puedo pagar?";
 
-  window.open("https://wa.me/?text=" + encodeURIComponent(message), "_blank");
+  const url = WHATSAPP_NUMBER
+    ? "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message)
+    : "https://wa.me/?text=" + encodeURIComponent(message);
+
+  window.open(url, "_blank", "noopener");
 }
 
 document.getElementById("year").textContent = new Date().getFullYear();
-renderProducts();
 renderCart();
+loadProducts();
 </script>
 </body>
 </html>
