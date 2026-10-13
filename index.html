@@ -199,18 +199,59 @@ const cart=[];
 const money=amount=>new Intl.NumberFormat("es-AR",{style:"currency",currency:"ARS",maximumFractionDigits:0}).format(amount);
 
 function renderProducts(){
-const query=document.getElementById("search").value.toLowerCase().trim();
-const category=document.getElementById("category-filter").value;
-const filtered=products.filter(p=>p.name.toLowerCase().includes(query)&&(category==="Todos"||p.category===category));
-document.getElementById("products").innerHTML=filtered.map(p=>`
-<article class="product">
-<div class="product-image"><img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.style.display='none';this.parentElement.textContent='${p.category.toUpperCase()}'"></div>
-<div class="product-info"><h3>${p.name}</h3><div class="price">${money(p.price)}</div><p>${p.category}</p>
-<div class="product-actions"><select id="size-${p.id}" aria-label="Elegir talle">${p.sizes.map(s=>`<option value="${s}">${s}</option>`).join("")}</select><button class="buy-button" onclick="addToCart(${p.id})">AGREGAR +</button></div>
-</div></article>`).join("");
-document.getElementById("empty").hidden=filtered.length!==0;
-}
+```javascript
+function renderProducts(){
+  const searchInput = document.getElementById("search");
+  const categoryInput = document.getElementById("category-filter");
+  const query = searchInput ? searchInput.value.toLowerCase().trim() : "";
+  const category = categoryInput ? categoryInput.value : "Todos";
 
+  const filtered = products.filter(function(p){
+    const matchesName = p.name.toLowerCase().includes(query);
+    const matchesCategory = category === "Todos" || p.category === category;
+    return matchesName && matchesCategory;
+  });
+
+  const container = document.getElementById("products");
+  const emptyMessage = document.getElementById("empty");
+
+  container.innerHTML = "";
+
+  filtered.forEach(function(p){
+    const article = document.createElement("article");
+    article.className = "product";
+
+    article.innerHTML = `
+      <div class="product-image">
+        <img src="${p.image}" alt="${p.name}" loading="lazy">
+      </div>
+      <div class="product-info">
+        <h3>${p.name}</h3>
+        <div class="price">${money(p.price)}</div>
+        <p>${p.category}</p>
+        <div class="product-actions">
+          <select id="size-${p.id}" aria-label="Elegir talle">
+            ${p.sizes.map(function(s){
+              return `<option value="${s}">${s}</option>`;
+            }).join("")}
+          </select>
+          <button class="buy-button" onclick="addToCart(${p.id})">AGREGAR +</button>
+        </div>
+      </div>
+    `;
+
+    const img = article.querySelector("img");
+    img.onerror = function(){
+      this.style.display = "none";
+      this.parentElement.textContent = p.category.toUpperCase();
+    };
+
+    container.appendChild(article);
+  });
+
+  emptyMessage.hidden = filtered.length > 0;
+}
+```
 function filterCategory(category){
 document.getElementById("category-filter").value=category;
 renderProducts();
