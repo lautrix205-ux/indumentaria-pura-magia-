@@ -4,104 +4,157 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Admin | Pura Magia</title>
+<title>Administrador | Pura Magia</title>
 <style>
+:root{--bg:#0b0b0b;--card:#171717;--yellow:#eaff62;--text:#fff;--muted:#aaa;--border:#333}
 *{box-sizing:border-box}
-body{margin:0;background:#101010;color:#fff;font-family:Arial,sans-serif;padding:20px}
-main{max-width:900px;margin:auto}
-h1{color:#e9ff63}
-.card{background:#1c1c1c;padding:20px;border-radius:14px;margin:18px 0}
-input,select,textarea,button{width:100%;padding:12px;margin:6px 0;border-radius:8px;border:1px solid #444;font:inherit}
-input,select,textarea{background:#111;color:#fff}
-button{background:#e9ff63;color:#111;font-weight:bold;cursor:pointer;border:0}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;padding:20px}
+main{max-width:1000px;margin:auto}
+h1{color:var(--yellow);font-size:30px}
+h2{font-size:21px}
+.card{background:var(--card);padding:22px;border:1px solid var(--border);border-radius:15px;margin:18px 0}
+input,select,textarea,button{font:inherit;width:100%;padding:12px;margin:6px 0;border-radius:8px}
+input,select,textarea{background:#101010;color:#fff;border:1px solid #444}
+input[type=file]{padding:10px;border-style:dashed}
+input[type=checkbox]{width:auto;accent-color:var(--yellow)}
+textarea{min-height:85px;resize:vertical}
+button{background:var(--yellow);color:#111;font-weight:bold;border:0;cursor:pointer}
+button:disabled{opacity:.5;cursor:wait}
 .secondary{background:#333;color:white}
 .danger{background:#b83232;color:white}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
-.product{border-top:1px solid #444;padding:14px 0;display:grid;grid-template-columns:70px 1fr;gap:12px}
-.product img{width:70px;height:90px;object-fit:cover;border-radius:7px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+label{display:block;margin-top:12px;font-size:14px;color:#ddd}
+.muted{color:var(--muted);font-size:14px;line-height:1.5}
+.product{border-top:1px solid var(--border);padding:16px 0;display:grid;grid-template-columns:90px 1fr;gap:14px}
+.product img{width:90px;height:110px;object-fit:cover;border-radius:8px;background:#222}
 .smallbuttons{display:flex;gap:8px}
 .smallbuttons button{flex:1}
-.muted{color:#aaa;font-size:14px}
 #app{display:none}
+#preview{display:none;max-width:180px;max-height:200px;object-fit:contain;border-radius:10px;margin-top:10px}
+.status{padding:12px;border-radius:8px;background:#222;overflow-wrap:anywhere}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.topline button{width:auto}
+@media(max-width:500px){body{padding:10px}.card{padding:15px}.product{grid-template-columns:65px 1fr}.product img{width:65px;height:85px}.smallbuttons{flex-direction:column;gap:0}}
 </style>
 </head>
 <body>
 <main>
 <h1>🪄 PURA MAGIA</h1>
-<p>Panel privado de administración</p>
+<p class="muted">Panel privado de administración</p>
 
 <section id="login" class="card">
 <h2>Iniciar sesión</h2>
 <form id="loginForm">
-<input id="email" type="email" placeholder="Tu correo electrónico" required>
-<input id="password" type="password" placeholder="Tu contraseña" required>
-<button type="submit">Entrar al panel</button>
+<label for="email">Correo electrónico</label>
+<input id="email" type="email" placeholder="Tu correo" autocomplete="username" required>
+<label for="password">Contraseña</label>
+<input id="password" type="password" placeholder="Tu contraseña" autocomplete="current-password" required>
+<button id="loginButton" type="submit">Entrar al panel</button>
 </form>
-<p id="loginMessage" class="muted"></p>
+<p id="loginMessage" class="muted" role="status"></p>
 </section>
 
 <section id="app">
-<div class="card">
-<div class="grid">
+<div class="card topline">
 <div>
-<h2>Productos</h2>
-<p class="muted">Agregá y administrá tu catálogo.</p>
+<h2>Tu tienda</h2>
+<p class="muted">Administrá tus productos, fotos y precios.</p>
 </div>
 <div>
-<button id="logout" class="secondary">Cerrar sesión</button>
-<button id="store" class="secondary">Ver tienda</button>
-</div>
+<button id="store" type="button" class="secondary">Ver tienda</button>
+<button id="logout" type="button" class="secondary">Cerrar sesión</button>
 </div>
 </div>
 
 <div class="card">
 <h2 id="formTitle">Agregar producto</h2>
 <form id="productForm">
-<input id="name" placeholder="Nombre del producto" required>
-<textarea id="description" placeholder="Descripción de la prenda"></textarea>
+<label for="name">Nombre del producto</label>
+<input id="name" placeholder="Ej.: Remera Oversize Negra" required maxlength="150">
+
+<label for="description">Descripción</label>
+<textarea id="description" placeholder="Color, material, detalles, etc."></textarea>
+
 <div class="grid">
-<input id="price" type="number" min="0" step="0.01" placeholder="Precio en pesos" required>
-<input id="stock" type="number" min="0" step="1" placeholder="Stock disponible" required>
+<div>
+<label for="price">Precio en pesos argentinos</label>
+<input id="price" type="number" min="0.01" step="0.01" placeholder="15000" required>
 </div>
-<input id="image" type="url" placeholder="URL de la foto (https://...)" required>
+<div>
+<label for="stock">Cantidad disponible</label>
+<input id="stock" type="number" min="0" step="1" placeholder="10" required>
+</div>
+</div>
+
 <label for="category">Categoría</label>
 <select id="category">
 <option value="">Sin categoría</option>
 </select>
-<label><input id="active" type="checkbox" checked style="width:auto"> Producto visible en la tienda</label>
+
+<label for="imageFile">Foto del producto desde tu PC</label>
+<input id="imageFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
+<p class="muted">Formatos: JPG, PNG, WEBP o GIF. Máximo 5 MB por imagen.</p>
+<img id="preview" alt="Vista previa de la foto seleccionada">
+
+<label>
+<input id="active" type="checkbox" checked>
+ Producto visible en la tienda
+</label>
+
 <button id="saveProduct" type="submit">Guardar producto</button>
 <button id="cancelEdit" type="button" class="secondary" hidden>Cancelar edición</button>
 </form>
-<p id="productMessage" class="muted"></p>
+<p id="productMessage" class="status muted" role="status"></p>
 </div>
 
 <div class="card">
 <h2>Categorías</h2>
 <form id="categoryForm">
-<input id="categoryName" placeholder="Nueva categoría (ej. Buzos)" required>
-<button type="submit">Crear categoría</button>
+<label for="categoryName">Nombre de la nueva categoría</label>
+<input id="categoryName" placeholder="Ej.: Buzos, Pantalones, Zapatillas" required maxlength="100">
+<button id="categoryButton" type="submit">Crear categoría</button>
 </form>
-<p id="categoryMessage" class="muted"></p>
+<p id="categoryMessage" class="muted" role="status"></p>
 </div>
 
 <div class="card">
+<div class="topline">
 <h2>Catálogo actual</h2>
-<button id="reload" class="secondary">Actualizar catálogo</button>
-<div id="products"></div>
+<button id="reload" type="button" class="secondary">Actualizar</button>
+</div>
+<div id="products" class="muted">Cargando catálogo...</div>
 </div>
 </section>
 </main>
 
 <script>
+"use strict";
+
 const SUPABASE_URL = "https://hcnjnzpmlydhjnsdvzyh.supabase.co";
 const SUPABASE_KEY = "sb_publishable_w5yT150xEdZuz3Ob6BRpng_vgiqrBN_";
+const BUCKET = "product-images";
 const STORE_URL = "https://lautrix205-ux.github.io/indumentaria-pura-magia-/";
 
 let accessToken = "";
-let editingId = null;
 let categories = [];
+let editingId = null;
+let editingImageUrl = "";
 
 const $ = id => document.getElementById(id);
+
+function showMessage(id, text) {
+  $(id).textContent = text;
+}
+
+async function readError(response) {
+  const text = await response.text();
+  try {
+    const data = JSON.parse(text);
+    return data.message || data.msg || data.error_description || text;
+  } catch {
+    return text || response.statusText;
+  }
+}
 
 async function api(path, options = {}) {
   const headers = {
@@ -116,59 +169,68 @@ async function api(path, options = {}) {
     headers
   });
 
-  const text = await response.text();
   if (!response.ok) {
-    let message = text;
-    try {
-      const data = JSON.parse(text);
-      message = data.message || data.msg || text;
-    } catch {}
-    throw new Error("Error " + response.status + ": " + message);
+    throw new Error("Error " + response.status + ": " + await readError(response));
   }
 
+  const text = await response.text();
   return text ? JSON.parse(text) : null;
-}
-
-function message(id, text) {
-  $(id).textContent = text;
 }
 
 async function login(email, password) {
   const response = await fetch(
     SUPABASE_URL + "/auth/v1/token?grant_type=password",
     {
-      method:"POST",
-      headers:{
-        apikey:SUPABASE_KEY,
-        "Content-Type":"application/json"
+      method: "POST",
+      headers: {
+        apikey: SUPABASE_KEY,
+        "Content-Type": "application/json"
       },
-      body:JSON.stringify({email,password})
+      body: JSON.stringify({email, password})
     }
   );
 
-  const data = await response.json();
   if (!response.ok) {
-    throw new Error(data.msg || data.message || "No se pudo iniciar sesión.");
+    throw new Error("Inicio de sesión: " + await readError(response));
   }
 
+  const data = await response.json();
   accessToken = data.access_token;
 
-  const isAdmin = await api("/rest/v1/rpc/is_admin", {
-    method:"POST",
-    body:"{}"
-  });
+  try {
+    const result = await api("/rest/v1/rpc/is_admin", {
+      method: "POST",
+      body: "{}"
+    });
 
-  if (isAdmin !== true) {
+    if (result !== true) {
+      throw new Error("Esta cuenta no tiene permisos de administrador.");
+    }
+  } catch (error) {
     accessToken = "";
-    throw new Error("Esta cuenta no tiene permisos de administrador.");
+    throw error;
   }
 
   $("login").style.display = "none";
   $("app").style.display = "block";
   $("password").value = "";
+  showMessage("productMessage", "");
 
   await loadCategories();
   await loadProducts();
+}
+
+function resetForm() {
+  editingId = null;
+  editingImageUrl = "";
+  $("productForm").reset();
+  $("active").checked = true;
+  $("formTitle").textContent = "Agregar producto";
+  $("saveProduct").textContent = "Guardar producto";
+  $("cancelEdit").hidden = true;
+  $("imageFile").value = "";
+  $("preview").removeAttribute("src");
+  $("preview").style.display = "none";
 }
 
 async function loadCategories() {
@@ -181,21 +243,12 @@ async function loadCategories() {
   select.replaceChildren(new Option("Sin categoría", ""));
 
   categories.forEach(category => {
-    select.add(new Option(category.name, category.id));
+    select.add(new Option(category.name, String(category.id)));
   });
 
   if ([...select.options].some(option => option.value === current)) {
     select.value = current;
   }
-}
-
-function resetForm() {
-  editingId = null;
-  $("productForm").reset();
-  $("active").checked = true;
-  $("formTitle").textContent = "Agregar producto";
-  $("saveProduct").textContent = "Guardar producto";
-  $("cancelEdit").hidden = true;
 }
 
 async function loadProducts() {
@@ -218,16 +271,26 @@ async function loadProducts() {
       const item = document.createElement("div");
       item.className = "product";
 
-      const img = document.createElement("img");
-      img.alt = product.name;
-      img.src = product.image_url || "";
-      img.onerror = () => { img.style.visibility = "hidden"; };
+      if (product.image_url) {
+        const img = document.createElement("img");
+        img.alt = product.name;
+        img.loading = "lazy";
+        img.src = product.image_url;
+        img.onerror = () => { img.style.visibility = "hidden"; };
+        item.append(img);
+      } else {
+        const placeholder = document.createElement("div");
+        placeholder.textContent = "Sin foto";
+        placeholder.className = "muted";
+        item.append(placeholder);
+      }
 
       const details = document.createElement("div");
       const title = document.createElement("strong");
       title.textContent = product.name;
 
       const info = document.createElement("p");
+      info.className = "muted";
       info.textContent =
         "$" + Number(product.price).toLocaleString("es-AR") +
         " · Stock: " + product.stock +
@@ -237,137 +300,254 @@ async function loadProducts() {
       buttons.className = "smallbuttons";
 
       const edit = document.createElement("button");
+      edit.type = "button";
       edit.textContent = "Editar";
       edit.onclick = () => editProduct(product);
 
       const remove = document.createElement("button");
+      remove.type = "button";
       remove.textContent = "Eliminar";
       remove.className = "danger";
       remove.onclick = () => deleteProduct(product);
 
       buttons.append(edit, remove);
       details.append(title, info, buttons);
-      item.append(img, details);
+      item.append(details);
       container.append(item);
     });
   } catch (error) {
-    message("productMessage", error.message);
     $("products").textContent = "No se pudo cargar el catálogo.";
+    showMessage("productMessage", error.message);
   }
 }
 
 function editProduct(product) {
   editingId = product.id;
+  editingImageUrl = product.image_url || "";
+
   $("name").value = product.name || "";
   $("description").value = product.description || "";
   $("price").value = product.price;
   $("stock").value = product.stock;
-  $("image").value = product.image_url || "";
-  $("category").value = product.category_id ?? "";
-  $("active").checked = product.active;
+  $("category").value = product.category_id == null ? "" : String(product.category_id);
+  $("active").checked = Boolean(product.active);
+  $("imageFile").value = "";
+
   $("formTitle").textContent = "Editar producto";
   $("saveProduct").textContent = "Guardar cambios";
   $("cancelEdit").hidden = false;
-  window.scrollTo({top:0,behavior:"smooth"});
+
+  if (editingImageUrl) {
+    $("preview").src = editingImageUrl;
+    $("preview").style.display = "block";
+  } else {
+    $("preview").style.display = "none";
+  }
+
+  showMessage("productMessage", "Si no elegís otra foto, se conservará la actual.");
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function safeFileName(name) {
+  return name.normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-zA-Z0-9._-]/g, "-")
+    .slice(-100);
+}
+
+async function uploadImage(file) {
+  if (!file) return "";
+
+  const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+  if (!allowedTypes.includes(file.type)) {
+    throw new Error("Elegí una imagen JPG, PNG, WEBP o GIF.");
+  }
+
+  if (file.size > 5 * 1024 * 1024) {
+    throw new Error("La imagen supera los 5 MB. Elegí una más liviana.");
+  }
+
+  const fileName = Date.now() + "-" + safeFileName(file.name);
+  const encodedName = encodeURIComponent(fileName);
+
+  const response = await fetch(
+    SUPABASE_URL + "/storage/v1/object/" + BUCKET + "/" + encodedName,
+    {
+      method: "POST",
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization: "Bearer " + accessToken,
+        "Content-Type": file.type,
+        "x-upsert": "false"
+      },
+      body: file
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("No se pudo subir la foto: " + await readError(response));
+  }
+
+  return SUPABASE_URL + "/storage/v1/object/public/" +
+    BUCKET + "/" + encodedName;
 }
 
 async function deleteProduct(product) {
-  if (!confirm('¿Eliminar "' + product.name + '"?')) return;
+  if (!confirm('¿Querés eliminar "' + product.name + '" de la tienda?')) return;
 
   try {
     await api("/rest/v1/products?id=eq." + product.id, {
-      method:"DELETE"
+      method: "DELETE"
     });
-    message("productMessage", "Producto eliminado.");
+    showMessage("productMessage", "Producto eliminado.");
     await loadProducts();
   } catch (error) {
-    message("productMessage", error.message);
+    showMessage("productMessage", error.message);
   }
 }
 
 $("loginForm").addEventListener("submit", async event => {
   event.preventDefault();
-  message("loginMessage", "Verificando acceso...");
+  const button = $("loginButton");
+  button.disabled = true;
+  button.textContent = "Verificando...";
+  showMessage("loginMessage", "");
 
   try {
     await login($("email").value.trim(), $("password").value);
-    message("loginMessage", "");
+    showMessage("loginMessage", "");
   } catch (error) {
-    message("loginMessage", error.message);
+    showMessage("loginMessage", error.message);
+  } finally {
+    button.disabled = false;
+    button.textContent = "Entrar al panel";
   }
+});
+
+$("imageFile").addEventListener("change", () => {
+  const file = $("imageFile").files[0];
+  if (!file) return;
+
+  if (!file.type.startsWith("image/")) {
+    showMessage("productMessage", "Elegí un archivo de imagen.");
+    $("imageFile").value = "";
+    return;
+  }
+
+  $("preview").src = URL.createObjectURL(file);
+  $("preview").style.display = "block";
 });
 
 $("productForm").addEventListener("submit", async event => {
   event.preventDefault();
 
-  const product = {
-    name:$("name").value.trim(),
-    description:$("description").value.trim(),
-    price:Number($("price").value),
-    image_url:$("image").value.trim(),
-    category_id:$("category").value ? Number($("category").value) : null,
-    stock:Number($("stock").value),
-    active:$("active").checked
-  };
+  const button = $("saveProduct");
+  button.disabled = true;
 
   try {
+    showMessage("productMessage", "Guardando producto...");
+
+    const file = $("imageFile").files[0];
+    let imageUrl = editingImageUrl;
+
+    if (file) {
+      showMessage("productMessage", "Subiendo foto...");
+      imageUrl = await uploadImage(file);
+    }
+
+    if (!imageUrl) {
+      throw new Error("Elegí una foto para este producto antes de guardarlo.");
+    }
+
+    const product = {
+      name: $("name").value.trim(),
+      description: $("description").value.trim(),
+      price: Number($("price").value),
+      image_url: imageUrl,
+      category_id: $("category").value ? Number($("category").value) : null,
+      stock: Number($("stock").value),
+      active: $("active").checked
+    };
+
+    if (!product.name || !Number.isFinite(product.price) ||
+        product.price <= 0 || !Number.isInteger(product.stock) ||
+        product.stock < 0) {
+      throw new Error("Revisá el nombre, el precio y el stock.");
+    }
+
     if (editingId !== null) {
       await api("/rest/v1/products?id=eq." + editingId, {
-        method:"PATCH",
-        headers:{"Prefer":"return=minimal"},
-        body:JSON.stringify(product)
+        method: "PATCH",
+        headers: {"Prefer":"return=minimal"},
+        body: JSON.stringify(product)
       });
-      message("productMessage", "¡Producto actualizado!");
+      showMessage("productMessage", "¡Producto actualizado correctamente!");
     } else {
       await api("/rest/v1/products", {
-        method:"POST",
-        headers:{"Prefer":"return=minimal"},
-        body:JSON.stringify(product)
+        method: "POST",
+        headers: {"Prefer":"return=minimal"},
+        body: JSON.stringify(product)
       });
-      message("productMessage", "¡Producto agregado!");
+      showMessage("productMessage", "¡Producto agregado correctamente!");
     }
 
     resetForm();
     await loadProducts();
   } catch (error) {
-    message("productMessage", error.message);
+    showMessage("productMessage", error.message);
+  } finally {
+    button.disabled = false;
+    button.textContent = editingId !== null ? "Guardar cambios" : "Guardar producto";
   }
 });
 
 $("categoryForm").addEventListener("submit", async event => {
   event.preventDefault();
+  const button = $("categoryButton");
+  button.disabled = true;
 
   try {
+    const name = $("categoryName").value.trim();
+    if (!name) throw new Error("Escribí el nombre de la categoría.");
+
     await api("/rest/v1/categories", {
-      method:"POST",
-      headers:{"Prefer":"return=minimal"},
-      body:JSON.stringify({name:$("categoryName").value.trim()})
+      method: "POST",
+      headers: {"Prefer":"return=minimal"},
+      body: JSON.stringify({name})
     });
 
     $("categoryName").value = "";
-    message("categoryMessage", "¡Categoría creada!");
+    showMessage("categoryMessage", "¡Categoría creada!");
     await loadCategories();
   } catch (error) {
-    message("categoryMessage", error.message);
+    showMessage("categoryMessage", error.message);
+  } finally {
+    button.disabled = false;
   }
 });
 
-$("cancelEdit").addEventListener("click", resetForm);
+$("cancelEdit").addEventListener("click", () => {
+  resetForm();
+  showMessage("productMessage", "");
+});
+
 $("reload").addEventListener("click", async () => {
   try {
     await loadCategories();
     await loadProducts();
+    showMessage("productMessage", "Catálogo actualizado.");
   } catch (error) {
-    message("productMessage", error.message);
+    showMessage("productMessage", error.message);
   }
 });
 
 $("logout").addEventListener("click", () => {
   accessToken = "";
-  editingId = null;
+  categories = [];
+  resetForm();
   $("app").style.display = "none";
   $("login").style.display = "block";
-  message("loginMessage", "Sesión cerrada.");
+  showMessage("loginMessage", "Sesión cerrada.");
 });
 
 $("store").addEventListener("click", () => {
