@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111111">
+  <title>PURA MAGIA | Tienda online</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #171717;
+      background: #faf9f6;
+    }
+    header {
+      background: #111;
+      color: white;
+      padding: 22px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .logo { font-size: 26px; font-weight: 900; letter-spacing: 3px; }
+    nav a { color: white; text-decoration: none; margin-left: 18px; }
+    .hero {
+      min-height: 340px;
+      padding: 75px 8%;
+      background: linear-gradient(120deg, #e8dfd3, #faf9f6);
+    }
+    .hero p { letter-spacing: 3px; text-transform: uppercase; }
+    h1 { font-size: clamp(38px, 7vw, 68px); margin: 15px 0; }
+    .hero a, .contact {
+      display: inline-block;
+      background: #111;
+      color: white;
+      padding: 14px 22px;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+    main { padding: 35px 6%; }
+    .filters { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0; }
+    .filters button {
+      border: 1px solid #222;
+      padding: 10px 16px;
+      background: transparent;
+      cursor: pointer;
+      border-radius: 25px;
+    }
+    .filters button.active { background: #111; color: white; }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 22px;
+    }
+    .product {
+      background: white;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .product img { width: 100%; height: 230px; object-fit: cover; background: #eee; }
+    .product-info { padding: 16px; }
+    .product h3 { margin: 0 0 8px; }
+    .price { font-weight: bold; font-size: 19px; }
+    .product button {
+      width: 100%;
+      padding: 12px;
+      border: 0;
+      background: #111;
+      color: white;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    #mensaje { color: #555; }
+    footer { background: #111; color: white; padding: 30px 6%; margin-top: 30px; }
+    @media (max-width: 550px) {
+      header { align-items: flex-start; flex-direction: column; }
+      nav a { margin: 0 12px 0 0; }
+      .hero { padding: 55px 7%; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">PURA MAGIA</div>
+    <nav>
+      <a href="#inicio">Inicio</a>
+      <a href="#productos">Productos</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="inicio">
+    <p>Tu estilo, tu esencia</p>
+    <h1>Encontrá tu magia.</h1>
+    <p>Ropa y productos para todos los días.</p>
+    <a href="#productos">Explorar productos</a>
+  </section>
+
+  <main id="productos">
+    <h2>Nuestros productos</h2>
+    <p>Descubrí tus próximos favoritos.</p>
+    <div class="filters">
+      <button class="active" data-category="Todos">Todos</button>
+      <button data-category="Ropa">Ropa</button>
+      <button data-category="Accesorios">Accesorios</button>
+      <button data-category="Otros">Otros</button>
+    </div>
+    <p id="mensaje">Productos de demostración. Los precios son ilustrativos.</p>
+    <div class="products" id="lista-productos"></div>
+  </main>
+
+  <main id="contacto">
+    <h2>¿Tenés alguna consulta?</h2>
+    <p>Contactanos para consultar disponibilidad y realizar tu pedido.</p>
+    <a class="contact" id="whatsapp" href="https://wa.me/" target="_blank" rel="noopener">Consultar por WhatsApp</a>
+  </main>
+
+  <footer>
+    <strong>PURA MAGIA</strong>
+    <p>Tu próxima compra empieza acá.</p>
+    <small>© <span id="anio"></span> PURA MAGIA</small>
+  </footer>
+
+  <script>
+    const productos = [
+      { nombre: "Remera básica", categoria: "Ropa", precio: 12000, imagen: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600" },
+      { nombre: "Buzo urbano", categoria: "Ropa", precio: 28000, imagen: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600" },
+      { nombre: "Gorra clásica", categoria: "Accesorios", precio: 9000, imagen: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=600" },
+      { nombre: "Bolso urbano", categoria: "Otros", precio: 18000, imagen: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600" }
+    ];
+
+    const lista = document.getElementById("lista-productos");
+    const formatoPrecio = n => n.toLocaleString("es-AR", {
+      style: "currency", currency: "ARS", maximumFractionDigits: 0
+    });
+
+    function mostrarProductos(categoria = "Todos") {
+      lista.innerHTML = "";
+      const filtrados = productos.filter(p =>
+        categoria === "Todos" || p.categoria === categoria
+      );
+
+      filtrados.forEach(p => {
+        const tarjeta = document.createElement("article");
+        tarjeta.className = "product";
+
+        const img = document.createElement("img");
+        img.src = p.imagen;
+        img.alt = p.nombre;
+        img.loading = "lazy";
+
+        const info = document.createElement("div");
+        info.className = "product-info";
+
+        const titulo = document.createElement("h3");
+        titulo.textContent = p.nombre;
+
+        const precio = document.createElement("p");
+        precio.className = "price";
+        precio.textContent = formatoPrecio(p.precio);
+
+        const boton = document.createElement("button");
+        boton.textContent = "Consultar producto";
+        boton.addEventListener("click", () => {
+          const mensaje = encodeURIComponent(
+            `Hola, quiero consultar por ${p.nombre}, precio publicado: ${formatoPrecio(p.precio)}.`
+          );
+          window.open(`https://wa.me/?text=${mensaje}`, "_blank", "noopener");
+        });
+
+        info.append(titulo, precio, boton);
+        tarjeta.append(img, info);
+        lista.append(tarjeta);
+      });
+    }
+
+    document.querySelectorAll("[data-category]").forEach(boton => {
+      boton.addEventListener("click", () => {
+        document.querySelectorAll("[data-category]").forEach(b => b.classList.remove("active"));
+        boton.classList.add("active");
+        mostrarProductos(boton.dataset.category);
+      });
+    });
+
+    document.getElementById("anio").textContent = new Date().getFullYear();
+    mostrarProductos();
+  </script>
+</body>
+</html>
