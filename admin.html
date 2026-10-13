@@ -1,130 +1,309 @@
-
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Administrador | Pura Magia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Administración | Pura Magia</title>
+
 <style>
-:root{--bg:#0b0b0b;--card:#171717;--yellow:#eaff62;--text:#fff;--muted:#aaa;--border:#333}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;padding:20px}
-main{max-width:1000px;margin:auto}
-h1{color:var(--yellow);font-size:30px}
-h2{font-size:21px}
-.card{background:var(--card);padding:22px;border:1px solid var(--border);border-radius:15px;margin:18px 0}
-input,select,textarea,button{font:inherit;width:100%;padding:12px;margin:6px 0;border-radius:8px}
-input,select,textarea{background:#101010;color:#fff;border:1px solid #444}
-input[type=file]{padding:10px;border-style:dashed}
-input[type=checkbox]{width:auto;accent-color:var(--yellow)}
-textarea{min-height:85px;resize:vertical}
-button{background:var(--yellow);color:#111;font-weight:bold;border:0;cursor:pointer}
-button:disabled{opacity:.5;cursor:wait}
-.secondary{background:#333;color:white}
-.danger{background:#b83232;color:white}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-label{display:block;margin-top:12px;font-size:14px;color:#ddd}
-.muted{color:var(--muted);font-size:14px;line-height:1.5}
-.product{border-top:1px solid var(--border);padding:16px 0;display:grid;grid-template-columns:90px 1fr;gap:14px}
-.product img{width:90px;height:110px;object-fit:cover;border-radius:8px;background:#222}
-.smallbuttons{display:flex;gap:8px}
-.smallbuttons button{flex:1}
-#app{display:none}
-#preview{display:none;max-width:180px;max-height:200px;object-fit:contain;border-radius:10px;margin-top:10px}
-.status{padding:12px;border-radius:8px;background:#222;overflow-wrap:anywhere}
-.topline{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.topline button{width:auto}
-@media(max-width:500px){body{padding:10px}.card{padding:15px}.product{grid-template-columns:65px 1fr}.product img{width:65px;height:85px}.smallbuttons{flex-direction:column;gap:0}}
+:root {
+  --bg: #0b0b0b;
+  --card: #171717;
+  --yellow: #eaff62;
+  --text: #fff;
+  --muted: #aaa;
+  --border: #333;
+  --red: #ff6464;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+}
+
+header {
+  padding: 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 22px;
+  letter-spacing: 2px;
+}
+
+header span { color: var(--yellow); }
+
+main {
+  width: min(100% - 28px, 1000px);
+  margin: 25px auto;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+h2 { margin-top: 0; font-size: 20px; }
+
+label {
+  display: block;
+  margin: 14px 0 7px;
+  font-size: 14px;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background: #101010;
+  color: white;
+  font: inherit;
+}
+
+textarea { min-height: 90px; resize: vertical; }
+
+input[type="checkbox"] { width: auto; }
+
+button, .button {
+  display: inline-block;
+  border: 0;
+  padding: 11px 15px;
+  margin-top: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  background: var(--yellow);
+  color: #111;
+  text-decoration: none;
+}
+
+button.secondary, .button.secondary {
+  background: #303030;
+  color: white;
+  border: 1px solid #444;
+}
+
+button.danger {
+  background: #451d1d;
+  color: #ffb3b3;
+  border: 1px solid #713333;
+}
+
+button:disabled { opacity: .55; cursor: wait; }
+
+.muted {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.hidden { display: none !important; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.product {
+  border-top: 1px solid var(--border);
+  padding: 16px 0;
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr);
+  gap: 14px;
+  overflow-wrap: anywhere;
+}
+
+.product img {
+  width: 90px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #222;
+}
+
+.product h3 { margin: 0 0 7px; }
+.product p { margin: 5px 0; font-size: 14px; }
+
+.preview-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.preview-item {
+  position: relative;
+  width: 100px;
+}
+
+.preview-item img {
+  display: block;
+  width: 100px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background: #222;
+}
+
+.preview-item small {
+  display: block;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 5px;
+  overflow-wrap: anywhere;
+}
+
+.status {
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  background: #202020;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 14px;
+}
+
+.status.error { color: #ff9999; }
+.status.success { color: #d9ff91; }
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.actions button { margin-top: 8px; }
+
+@media (max-width: 600px) {
+  .grid { grid-template-columns: 1fr; }
+  .card { padding: 15px; }
+  header h1 { font-size: 18px; }
+}
 </style>
 </head>
+
 <body>
+
+<header>
+  <h1>PURA <span>MAGIA</span> / ADMIN</h1>
+  <div class="actions">
+    <a class="button secondary" href="https://lautrix205-ux.github.io/indumentaria-pura-magia-/" target="_blank" rel="noopener">Ver tienda</a>
+    <button id="logoutBtn" class="secondary hidden" type="button">Cerrar sesión</button>
+  </div>
+</header>
+
 <main>
-<h1>🪄 PURA MAGIA</h1>
-<p class="muted">Panel privado de administración</p>
+  <section id="loginCard" class="card">
+    <h2>Ingresar al administrador</h2>
+    <p class="muted">Usá tu correo y contraseña de la cuenta autorizada en Supabase.</p>
 
-<section id="login" class="card">
-<h2>Iniciar sesión</h2>
-<form id="loginForm">
-<label for="email">Correo electrónico</label>
-<input id="email" type="email" placeholder="Tu correo" autocomplete="username" required>
-<label for="password">Contraseña</label>
-<input id="password" type="password" placeholder="Tu contraseña" autocomplete="current-password" required>
-<button id="loginButton" type="submit">Entrar al panel</button>
-</form>
-<p id="loginMessage" class="muted" role="status"></p>
-</section>
+    <form id="loginForm">
+      <label for="email">Correo electrónico</label>
+      <input id="email" type="email" autocomplete="username" required>
 
-<section id="app">
-<div class="card topline">
-<div>
-<h2>Tu tienda</h2>
-<p class="muted">Administrá tus productos, fotos y precios.</p>
-</div>
-<div>
-<button id="store" type="button" class="secondary">Ver tienda</button>
-<button id="logout" type="button" class="secondary">Cerrar sesión</button>
-</div>
-</div>
+      <label for="password">Contraseña</label>
+      <input id="password" type="password" autocomplete="current-password" required>
 
-<div class="card">
-<h2 id="formTitle">Agregar producto</h2>
-<form id="productForm">
-<label for="name">Nombre del producto</label>
-<input id="name" placeholder="Ej.: Remera Oversize Negra" required maxlength="150">
+      <button id="loginBtn" type="submit">Ingresar</button>
+    </form>
 
-<label for="description">Descripción</label>
-<textarea id="description" placeholder="Color, material, detalles, etc."></textarea>
+    <div id="loginStatus" class="status hidden"></div>
+  </section>
 
-<div class="grid">
-<div>
-<label for="price">Precio en pesos argentinos</label>
-<input id="price" type="number" min="0.01" step="0.01" placeholder="15000" required>
-</div>
-<div>
-<label for="stock">Cantidad disponible</label>
-<input id="stock" type="number" min="0" step="1" placeholder="10" required>
-</div>
-</div>
+  <section id="app" class="hidden">
 
-<label for="category">Categoría</label>
-<select id="category">
-<option value="">Sin categoría</option>
-</select>
+    <section class="card">
+      <h2 id="formTitle">Agregar producto</h2>
+      <p class="muted">
+        Podés seleccionar varias fotos a la vez. La primera será la principal
+        y las restantes formarán la galería. Cada imagen puede pesar hasta 5 MB.
+        Si seleccionás fotos nuevas al editar, reemplazarán las anteriores.
+      </p>
 
-<label for="imageFile">Foto del producto desde tu PC</label>
-<input id="imageFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
-<p class="muted">Formatos: JPG, PNG, WEBP o GIF. Máximo 5 MB por imagen.</p>
-<img id="preview" alt="Vista previa de la foto seleccionada">
+      <form id="productForm">
+        <label for="name">Nombre del producto</label>
+        <input id="name" maxlength="150" required>
 
-<label>
-<input id="active" type="checkbox" checked>
- Producto visible en la tienda
-</label>
+        <label for="description">Descripción</label>
+        <textarea id="description" maxlength="5000"></textarea>
 
-<button id="saveProduct" type="submit">Guardar producto</button>
-<button id="cancelEdit" type="button" class="secondary" hidden>Cancelar edición</button>
-</form>
-<p id="productMessage" class="status muted" role="status"></p>
-</div>
+        <div class="grid">
+          <div>
+            <label for="price">Precio en pesos argentinos (ARS)</label>
+            <input id="price" type="number" min="0" step="0.01" required>
+          </div>
+          <div>
+            <label for="stock">Stock disponible</label>
+            <input id="stock" type="number" min="0" step="1" value="0" required>
+          </div>
+        </div>
 
-<div class="card">
-<h2>Categorías</h2>
-<form id="categoryForm">
-<label for="categoryName">Nombre de la nueva categoría</label>
-<input id="categoryName" placeholder="Ej.: Buzos, Pantalones, Zapatillas" required maxlength="100">
-<button id="categoryButton" type="submit">Crear categoría</button>
-</form>
-<p id="categoryMessage" class="muted" role="status"></p>
-</div>
+        <label for="category">Categoría</label>
+        <select id="category">
+          <option value="">Sin categoría</option>
+        </select>
 
-<div class="card">
-<div class="topline">
-<h2>Catálogo actual</h2>
-<button id="reload" type="button" class="secondary">Actualizar</button>
-</div>
-<div id="products" class="muted">Cargando catálogo...</div>
-</div>
-</section>
+        <label for="imageFiles">Fotos del producto desde tu PC</label>
+        <input id="imageFiles" type="file"
+          accept="image/jpeg,image/png,image/webp,image/gif" multiple>
+
+        <p class="muted">
+          Formatos: JPG, PNG, WEBP o GIF. Máximo 5 MB por foto.
+          Si no elegís fotos al editar, se conservarán las existentes.
+        </p>
+
+        <div id="previews" class="preview-gallery"></div>
+
+        <label>
+          <input id="active" type="checkbox" checked>
+          Producto visible en la tienda
+        </label>
+
+        <div class="actions">
+          <button id="saveBtn" type="submit">Guardar producto</button>
+          <button id="cancelEditBtn" class="secondary hidden" type="button">Cancelar edición</button>
+        </div>
+      </form>
+
+      <div id="productStatus" class="status hidden"></div>
+    </section>
+
+    <section class="card">
+      <h2>Categorías</h2>
+      <form id="categoryForm">
+        <label for="categoryName">Nueva categoría</label>
+        <input id="categoryName" maxlength="80" placeholder="Ej.: Remeras, Buzos, Pantalones" required>
+        <button id="categoryBtn" type="submit">Crear categoría</button>
+      </form>
+      <div id="categoryStatus" class="status hidden"></div>
+    </section>
+
+    <section class="card">
+      <h2>Catálogo de productos</h2>
+      <div class="actions">
+        <button id="reloadBtn" class="secondary" type="button">Actualizar catálogo</button>
+      </div>
+      <div id="productsList"></div>
+      <div id="listStatus" class="status hidden"></div>
+    </section>
+  </section>
 </main>
 
 <script>
@@ -133,105 +312,113 @@ label{display:block;margin-top:12px;font-size:14px;color:#ddd}
 const SUPABASE_URL = "https://hcnjnzpmlydhjnsdvzyh.supabase.co";
 const SUPABASE_KEY = "sb_publishable_w5yT150xEdZuz3Ob6BRpng_vgiqrBN_";
 const BUCKET = "product-images";
-const STORE_URL = "https://lautrix205-ux.github.io/indumentaria-pura-magia-/";
 
 let accessToken = "";
 let categories = [];
 let editingId = null;
 let editingImageUrl = "";
+let editingImageUrls = [];
 
 const $ = id => document.getElementById(id);
 
-function showMessage(id, text) {
-  $(id).textContent = text;
+function showStatus(id, message, type = "") {
+  const el = $(id);
+  el.textContent = message;
+  el.className = "status" + (type ? " " + type : "");
+  el.classList.remove("hidden");
 }
 
-async function readError(response) {
-  const text = await response.text();
-  try {
-    const data = JSON.parse(text);
-    return data.message || data.msg || data.error_description || text;
-  } catch {
-    return text || response.statusText;
-  }
+function hideStatus(id) {
+  $(id).classList.add("hidden");
 }
 
 async function api(path, options = {}) {
   const headers = {
     apikey: SUPABASE_KEY,
     Authorization: "Bearer " + (accessToken || SUPABASE_KEY),
-    ...(options.body ? {"Content-Type":"application/json"} : {}),
     ...(options.headers || {})
   };
+
+  if (options.body && !(options.body instanceof FormData)) {
+    headers["Content-Type"] = "application/json";
+  }
 
   const response = await fetch(SUPABASE_URL + path, {
     ...options,
     headers
   });
 
-  if (!response.ok) {
-    throw new Error("Error " + response.status + ": " + await readError(response));
+  const raw = await response.text();
+  let data = null;
+
+  if (raw) {
+    try { data = JSON.parse(raw); }
+    catch { data = raw; }
   }
 
-  const text = await response.text();
-  return text ? JSON.parse(text) : null;
+  if (!response.ok) {
+    const message = typeof data === "string"
+      ? data
+      : data?.message || data?.msg || data?.error_description || JSON.stringify(data);
+    throw new Error(message || "Error HTTP " + response.status);
+  }
+
+  return data;
 }
 
-async function login(email, password) {
-  const response = await fetch(
-    SUPABASE_URL + "/auth/v1/token?grant_type=password",
-    {
-      method: "POST",
-      headers: {
-        apikey: SUPABASE_KEY,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({email, password})
-    }
-  );
+function setLoggedIn(loggedIn) {
+  $("loginCard").classList.toggle("hidden", loggedIn);
+  $("app").classList.toggle("hidden", !loggedIn);
+  $("logoutBtn").classList.toggle("hidden", !loggedIn);
+}
 
-  if (!response.ok) {
-    throw new Error("Inicio de sesión: " + await readError(response));
-  }
+$("loginForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  hideStatus("loginStatus");
 
-  const data = await response.json();
-  accessToken = data.access_token;
+  const button = $("loginBtn");
+  button.disabled = true;
+  button.textContent = "Ingresando...";
 
   try {
-    const result = await api("/rest/v1/rpc/is_admin", {
+    const result = await api("/auth/v1/token?grant_type=password", {
       method: "POST",
-      body: "{}"
+      body: JSON.stringify({
+        email: $("email").value.trim(),
+        password: $("password").value
+      })
     });
 
-    if (result !== true) {
-      throw new Error("Esta cuenta no tiene permisos de administrador.");
+    accessToken = result.access_token;
+
+    const adminResult = await api("/rest/v1/rpc/is_admin", {
+      method: "POST",
+      body: JSON.stringify({})
+    });
+
+    if (adminResult !== true) {
+      accessToken = "";
+      throw new Error("Tu cuenta no tiene permisos de administrador.");
     }
+
+    setLoggedIn(true);
+    await loadCategories();
+    await loadProducts();
   } catch (error) {
     accessToken = "";
-    throw error;
+    showStatus("loginStatus", "No se pudo ingresar: " + error.message, "error");
+  } finally {
+    button.disabled = false;
+    button.textContent = "Ingresar";
   }
+});
 
-  $("login").style.display = "none";
-  $("app").style.display = "block";
+$("logoutBtn").addEventListener("click", () => {
+  accessToken = "";
+  resetForm();
+  setLoggedIn(false);
   $("password").value = "";
-  showMessage("productMessage", "");
-
-  await loadCategories();
-  await loadProducts();
-}
-
-function resetForm() {
-  editingId = null;
-  editingImageUrl = "";
-  $("productForm").reset();
-  $("active").checked = true;
-  $("formTitle").textContent = "Agregar producto";
-  $("saveProduct").textContent = "Guardar producto";
-  $("cancelEdit").hidden = true;
-  $("imageFile").value = "";
-  $("preview").removeAttribute("src");
-  $("preview").style.display = "none";
-}
+});
 
 async function loadCategories() {
   categories = await api(
@@ -239,139 +426,194 @@ async function loadCategories() {
   );
 
   const select = $("category");
-  const current = select.value;
   select.replaceChildren(new Option("Sin categoría", ""));
 
   categories.forEach(category => {
-    select.add(new Option(category.name, String(category.id)));
+    select.add(new Option(category.name, category.id));
   });
-
-  if ([...select.options].some(option => option.value === current)) {
-    select.value = current;
-  }
 }
 
 async function loadProducts() {
-  $("products").textContent = "Cargando productos...";
+  hideStatus("listStatus");
+  $("productsList").textContent = "Cargando productos...";
 
   try {
     const products = await api(
-      "/rest/v1/products?select=id,name,description,price,image_url,category_id,stock,active&order=id.desc"
+      "/rest/v1/products?select=id,name,description,price,image_url,image_urls,category_id,stock,active&order=id.desc"
     );
 
-    const container = $("products");
-    container.replaceChildren();
+    $("productsList").replaceChildren();
 
     if (!products.length) {
-      container.textContent = "Todavía no hay productos.";
+      $("productsList").textContent = "Todavía no hay productos cargados.";
       return;
     }
 
     products.forEach(product => {
-      const item = document.createElement("div");
+      const item = document.createElement("article");
       item.className = "product";
 
-      if (product.image_url) {
-        const img = document.createElement("img");
-        img.alt = product.name;
-        img.loading = "lazy";
-        img.src = product.image_url;
-        img.onerror = () => { img.style.visibility = "hidden"; };
-        item.append(img);
-      } else {
-        const placeholder = document.createElement("div");
-        placeholder.textContent = "Sin foto";
-        placeholder.className = "muted";
-        item.append(placeholder);
-      }
+      const image = document.createElement("img");
+      image.alt = product.name;
+      image.loading = "lazy";
+      image.src = product.image_url || "";
+      image.onerror = () => {
+        image.style.visibility = "hidden";
+      };
 
-      const details = document.createElement("div");
-      const title = document.createElement("strong");
+      const info = document.createElement("div");
+      const title = document.createElement("h3");
       title.textContent = product.name;
 
-      const info = document.createElement("p");
-      info.className = "muted";
-      info.textContent =
-        "$" + Number(product.price).toLocaleString("es-AR") +
+      const price = document.createElement("p");
+      price.textContent = "$" + Number(product.price).toLocaleString("es-AR");
+
+      const category = categories.find(
+        c => Number(c.id) === Number(product.category_id)
+      );
+
+      const details = document.createElement("p");
+      details.className = "muted";
+      const extras = Array.isArray(product.image_urls) ? product.image_urls.length : 0;
+      details.textContent =
+        (category ? category.name : "Sin categoría") +
         " · Stock: " + product.stock +
-        " · " + (product.active ? "Visible" : "Oculto");
+        " · " + (product.active ? "Visible" : "Oculto") +
+        " · " + (1 + extras) + " foto(s)";
 
-      const buttons = document.createElement("div");
-      buttons.className = "smallbuttons";
+      const actions = document.createElement("div");
+      actions.className = "actions";
 
-      const edit = document.createElement("button");
-      edit.type = "button";
-      edit.textContent = "Editar";
-      edit.onclick = () => editProduct(product);
+      const editBtn = document.createElement("button");
+      editBtn.type = "button";
+      editBtn.className = "secondary";
+      editBtn.textContent = "Editar";
+      editBtn.addEventListener("click", () => editProduct(product));
 
-      const remove = document.createElement("button");
-      remove.type = "button";
-      remove.textContent = "Eliminar";
-      remove.className = "danger";
-      remove.onclick = () => deleteProduct(product);
+      const deleteBtn = document.createElement("button");
+      deleteBtn.type = "button";
+      deleteBtn.className = "danger";
+      deleteBtn.textContent = "Eliminar";
+      deleteBtn.addEventListener("click", () => deleteProduct(product));
 
-      buttons.append(edit, remove);
-      details.append(title, info, buttons);
-      item.append(details);
-      container.append(item);
+      actions.append(editBtn, deleteBtn);
+      info.append(title, price, details, actions);
+      item.append(image, info);
+      $("productsList").append(item);
     });
   } catch (error) {
-    $("products").textContent = "No se pudo cargar el catálogo.";
-    showMessage("productMessage", error.message);
+    $("productsList").textContent = "";
+    showStatus("listStatus", "Error al cargar productos: " + error.message, "error");
   }
 }
+
+function displayPreviews(urls = []) {
+  const container = $("previews");
+  container.replaceChildren();
+
+  urls.forEach((url, index) => {
+    const wrapper = document.createElement("div");
+    wrapper.className = "preview-item";
+
+    const img = document.createElement("img");
+    img.src = url;
+    img.alt = "Foto " + (index + 1);
+
+    const label = document.createElement("small");
+    label.textContent = index === 0 ? "Principal" : "Foto " + (index + 1);
+
+    wrapper.append(img, label);
+    container.append(wrapper);
+  });
+}
+
+$("imageFiles").addEventListener("change", () => {
+  const files = Array.from($("imageFiles").files || []);
+
+  if (!files.length) {
+    displayPreviews(editingImageUrl
+      ? [editingImageUrl, ...editingImageUrls]
+      : []);
+    return;
+  }
+
+  displayPreviews(files.map(file => URL.createObjectURL(file)));
+});
 
 function editProduct(product) {
   editingId = product.id;
   editingImageUrl = product.image_url || "";
+  editingImageUrls = Array.isArray(product.image_urls)
+    ? product.image_urls.filter(Boolean)
+    : [];
 
   $("name").value = product.name || "";
   $("description").value = product.description || "";
-  $("price").value = product.price;
-  $("stock").value = product.stock;
-  $("category").value = product.category_id == null ? "" : String(product.category_id);
+  $("price").value = product.price ?? "";
+  $("stock").value = product.stock ?? 0;
+  $("category").value = product.category_id ?? "";
   $("active").checked = Boolean(product.active);
-  $("imageFile").value = "";
+  $("imageFiles").value = "";
+
+  displayPreviews(
+    [editingImageUrl, ...editingImageUrls].filter(Boolean)
+  );
 
   $("formTitle").textContent = "Editar producto";
-  $("saveProduct").textContent = "Guardar cambios";
-  $("cancelEdit").hidden = false;
+  $("saveBtn").textContent = "Guardar cambios";
+  $("cancelEditBtn").classList.remove("hidden");
+  hideStatus("productStatus");
 
-  if (editingImageUrl) {
-    $("preview").src = editingImageUrl;
-    $("preview").style.display = "block";
-  } else {
-    $("preview").style.display = "none";
-  }
-
-  showMessage("productMessage", "Si no elegís otra foto, se conservará la actual.");
-  window.scrollTo({top:0, behavior:"smooth"});
+  $("productForm").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-function safeFileName(name) {
-  return name.normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-zA-Z0-9._-]/g, "-")
-    .slice(-100);
+function resetForm() {
+  editingId = null;
+  editingImageUrl = "";
+  editingImageUrls = [];
+
+  $("productForm").reset();
+  $("active").checked = true;
+  $("stock").value = 0;
+  $("imageFiles").value = "";
+  $("formTitle").textContent = "Agregar producto";
+  $("saveBtn").textContent = "Guardar producto";
+  $("cancelEditBtn").classList.add("hidden");
+
+  displayPreviews([]);
+  hideStatus("productStatus");
 }
+
+$("cancelEditBtn").addEventListener("click", resetForm);
 
 async function uploadImage(file) {
-  if (!file) return "";
+  const allowedTypes = [
+    "image/jpeg",
+    "image/png",
+    "image/webp",
+    "image/gif"
+  ];
 
-  const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
   if (!allowedTypes.includes(file.type)) {
-    throw new Error("Elegí una imagen JPG, PNG, WEBP o GIF.");
+    throw new Error("Formato no permitido en " + file.name);
   }
 
   if (file.size > 5 * 1024 * 1024) {
-    throw new Error("La imagen supera los 5 MB. Elegí una más liviana.");
+    throw new Error(file.name + " supera el máximo de 5 MB.");
   }
 
-  const fileName = Date.now() + "-" + safeFileName(file.name);
-  const encodedName = encodeURIComponent(fileName);
+  const extension = file.name.split(".").pop().toLowerCase();
+  const safeExtension = ["jpg", "jpeg", "png", "webp", "gif"].includes(extension)
+    ? extension
+    : "jpg";
+
+  const filePath =
+    Date.now() + "-" +
+    Math.random().toString(36).slice(2, 10) +
+    "." + safeExtension;
 
   const response = await fetch(
-    SUPABASE_URL + "/storage/v1/object/" + BUCKET + "/" + encodedName,
+    SUPABASE_URL + "/storage/v1/object/" + BUCKET + "/" + filePath,
     {
       method: "POST",
       headers: {
@@ -385,78 +627,42 @@ async function uploadImage(file) {
   );
 
   if (!response.ok) {
-    throw new Error("No se pudo subir la foto: " + await readError(response));
+    const message = await response.text();
+    throw new Error("No se pudo subir " + file.name + ": " + message);
   }
 
-  return SUPABASE_URL + "/storage/v1/object/public/" +
-    BUCKET + "/" + encodedName;
+  return SUPABASE_URL +
+    "/storage/v1/object/public/" + BUCKET + "/" + filePath;
 }
-
-async function deleteProduct(product) {
-  if (!confirm('¿Querés eliminar "' + product.name + '" de la tienda?')) return;
-
-  try {
-    await api("/rest/v1/products?id=eq." + product.id, {
-      method: "DELETE"
-    });
-    showMessage("productMessage", "Producto eliminado.");
-    await loadProducts();
-  } catch (error) {
-    showMessage("productMessage", error.message);
-  }
-}
-
-$("loginForm").addEventListener("submit", async event => {
-  event.preventDefault();
-  const button = $("loginButton");
-  button.disabled = true;
-  button.textContent = "Verificando...";
-  showMessage("loginMessage", "");
-
-  try {
-    await login($("email").value.trim(), $("password").value);
-    showMessage("loginMessage", "");
-  } catch (error) {
-    showMessage("loginMessage", error.message);
-  } finally {
-    button.disabled = false;
-    button.textContent = "Entrar al panel";
-  }
-});
-
-$("imageFile").addEventListener("change", () => {
-  const file = $("imageFile").files[0];
-  if (!file) return;
-
-  if (!file.type.startsWith("image/")) {
-    showMessage("productMessage", "Elegí un archivo de imagen.");
-    $("imageFile").value = "";
-    return;
-  }
-
-  $("preview").src = URL.createObjectURL(file);
-  $("preview").style.display = "block";
-});
 
 $("productForm").addEventListener("submit", async event => {
   event.preventDefault();
+  hideStatus("productStatus");
 
-  const button = $("saveProduct");
+  const button = $("saveBtn");
   button.disabled = true;
 
   try {
-    showMessage("productMessage", "Guardando producto...");
-
-    const file = $("imageFile").files[0];
+    const files = Array.from($("imageFiles").files || []);
     let imageUrl = editingImageUrl;
+    let imageUrls = [...editingImageUrls];
 
-    if (file) {
-      showMessage("productMessage", "Subiendo foto...");
-      imageUrl = await uploadImage(file);
+    if (files.length) {
+      showStatus("productStatus", "Subiendo fotos... No cierres esta página.");
+
+      const uploadedUrls = [];
+
+      for (const file of files) {
+        const url = await uploadImage(file);
+        uploadedUrls.push(url);
+      }
+
+      imageUrl = uploadedUrls[0];
+      imageUrls = uploadedUrls.slice(1);
     }
 
     if (!imageUrl) {
-      throw new Error("Elegí una foto para este producto antes de guardarlo.");
+      throw new Error("Seleccioná al menos una foto para el producto.");
     }
 
     const product = {
@@ -464,95 +670,113 @@ $("productForm").addEventListener("submit", async event => {
       description: $("description").value.trim(),
       price: Number($("price").value),
       image_url: imageUrl,
-      category_id: $("category").value ? Number($("category").value) : null,
+      image_urls: imageUrls,
+      category_id: $("category").value
+        ? Number($("category").value)
+        : null,
       stock: Number($("stock").value),
       active: $("active").checked
     };
 
-    if (!product.name || !Number.isFinite(product.price) ||
-        product.price <= 0 || !Number.isInteger(product.stock) ||
-        product.stock < 0) {
-      throw new Error("Revisá el nombre, el precio y el stock.");
+    if (!product.name) {
+      throw new Error("Ingresá el nombre del producto.");
     }
+
+    if (!Number.isFinite(product.price) || product.price < 0) {
+      throw new Error("Ingresá un precio válido.");
+    }
+
+    if (!Number.isInteger(product.stock) || product.stock < 0) {
+      throw new Error("El stock debe ser un número entero igual o mayor que cero.");
+    }
+
+    showStatus("productStatus", "Guardando producto...");
 
     if (editingId !== null) {
       await api("/rest/v1/products?id=eq." + editingId, {
         method: "PATCH",
-        headers: {"Prefer":"return=minimal"},
+        headers: { Prefer: "return=minimal" },
         body: JSON.stringify(product)
       });
-      showMessage("productMessage", "¡Producto actualizado correctamente!");
     } else {
       await api("/rest/v1/products", {
         method: "POST",
-        headers: {"Prefer":"return=minimal"},
+        headers: { Prefer: "return=minimal" },
         body: JSON.stringify(product)
       });
-      showMessage("productMessage", "¡Producto agregado correctamente!");
     }
 
     resetForm();
+    showStatus("productStatus", "¡Producto guardado correctamente!", "success");
     await loadProducts();
   } catch (error) {
-    showMessage("productMessage", error.message);
+    showStatus("productStatus", "Error: " + error.message, "error");
   } finally {
     button.disabled = false;
-    button.textContent = editingId !== null ? "Guardar cambios" : "Guardar producto";
+    button.textContent = editingId !== null
+      ? "Guardar cambios"
+      : "Guardar producto";
   }
 });
 
 $("categoryForm").addEventListener("submit", async event => {
   event.preventDefault();
-  const button = $("categoryButton");
+  hideStatus("categoryStatus");
+
+  const button = $("categoryBtn");
   button.disabled = true;
 
   try {
     const name = $("categoryName").value.trim();
-    if (!name) throw new Error("Escribí el nombre de la categoría.");
+
+    if (!name) throw new Error("Ingresá el nombre de la categoría.");
 
     await api("/rest/v1/categories", {
       method: "POST",
-      headers: {"Prefer":"return=minimal"},
-      body: JSON.stringify({name})
+      headers: { Prefer: "return=minimal" },
+      body: JSON.stringify({ name })
     });
 
-    $("categoryName").value = "";
-    showMessage("categoryMessage", "¡Categoría creada!");
+    $("categoryForm").reset();
     await loadCategories();
+
+    showStatus("categoryStatus", "Categoría creada correctamente.", "success");
   } catch (error) {
-    showMessage("categoryMessage", error.message);
+    showStatus("categoryStatus", "Error: " + error.message, "error");
   } finally {
     button.disabled = false;
   }
 });
 
-$("cancelEdit").addEventListener("click", () => {
-  resetForm();
-  showMessage("productMessage", "");
-});
+async function deleteProduct(product) {
+  const confirmed = confirm(
+    '¿Querés eliminar "' + product.name + '" del catálogo?'
+  );
 
-$("reload").addEventListener("click", async () => {
+  if (!confirmed) return;
+
   try {
-    await loadCategories();
+    await api("/rest/v1/products?id=eq." + product.id, {
+      method: "DELETE",
+      headers: { Prefer: "return=minimal" }
+    });
+
+    if (Number(editingId) === Number(product.id)) resetForm();
+
     await loadProducts();
-    showMessage("productMessage", "Catálogo actualizado.");
   } catch (error) {
-    showMessage("productMessage", error.message);
+    alert("No se pudo eliminar el producto: " + error.message);
   }
+}
+
+$("reloadBtn").addEventListener("click", async () => {
+  await loadCategories();
+  await loadProducts();
 });
 
-$("logout").addEventListener("click", () => {
-  accessToken = "";
-  categories = [];
-  resetForm();
-  $("app").style.display = "none";
-  $("login").style.display = "block";
-  showMessage("loginMessage", "Sesión cerrada.");
-});
-
-$("store").addEventListener("click", () => {
-  window.open(STORE_URL, "_blank", "noopener");
-});
+setLoggedIn(false);
 </script>
+
 </body>
 </html>
+```
